@@ -3,40 +3,29 @@ import { galleryItems } from './gallery-items';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 // Change code below this line
-
 const gallery = document.querySelector('.gallery');
-galleryItems.map(({ preview, original, description }) =>
+const child = gallery.childNodes;
+
+for (const item of galleryItems) {
   gallery.insertAdjacentHTML(
     'beforeend',
-    `<div class="gallery__item">
-      <a class="gallery__link" href="large-image.jpg">
+    `
+      <a class="gallery__item" href=${item.original}>
         <img
           class="gallery__image"
-          src=${preview}
-          data-source=${original}
-          alt=${description}
+          src=${item.preview}
+          alt=${item.description}
         />
-      </a>
-    </div>`
-  )
-);
-
-const onClick = event => {
-  event.preventDefault();
-  if (event.target.nodeName !== 'IMG') {
-    return;
-  }
-  console.log(event.target);
-  const instance = basicLightbox.create(
-    `<img src=${event.target.dataset.source} alt=${event.target.description}></img>`
+      </a>`
   );
-  instance.show();
-  const onEscape = key => {
-    if (key.code === 'Escape') {
-      instance.close();
-    }
-  };
-  window.addEventListener('keydown', onEscape);
+}
+const lightbox = () => {
+  new SimpleLightbox('.gallery a', {
+    captionsData: 'alt',
+    canimationSpeed: 125,
+    captionPosition: 'outside',
+    fadeSpeed: 650,
+  });
 };
 
-gallery.addEventListener('click', onClick);
+gallery.addEventListener('click', lightbox());
