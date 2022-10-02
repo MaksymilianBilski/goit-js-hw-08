@@ -4,7 +4,6 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 // Change code below this line
 const gallery = document.querySelector('.gallery');
-const child = gallery.childNodes;
 
 for (const item of galleryItems) {
   gallery.insertAdjacentHTML(
