@@ -1,4 +1,4 @@
-import Vimeo from '../../node_modules/@vimeo/player/dist/player.es';
+import Vimeo from '/node_modules/@vimeo/player/src/player';
 
 const iframe = document.querySelector('iframe');
 const player = new Vimeo.Player(iframe);
