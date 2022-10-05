@@ -18,6 +18,8 @@ for (const item of galleryItems) {
       </a>`
   );
 }
+// var lightbox = new SimpleLightbox('.gallery a'); --> zamiast ostatniej linijiki można dodać tą
+
 const lightbox = () => {
   new SimpleLightbox('.gallery a', {
     captionsData: 'alt',

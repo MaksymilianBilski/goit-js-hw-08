@@ -10,3 +10,59 @@ player.on('play', function () {
 player.getVideoTitle().then(function (title) {
   console.log('title:', title);
 });
+
+player
+  .setCurrentTime(
+    player
+      .getCurrentTime()
+      .then(function (seconds) {
+        // seconds = the current playback position
+      })
+      .catch(function (error) {
+        // an error occurred
+      })
+  )
+  .then(function (seconds) {
+    // seconds = the actual time that the player seeked to
+  })
+  .catch(function (error) {
+    switch (error.name) {
+      case 'RangeError':
+        // the time was less than 0 or greater than the video’s duration
+        break;
+
+      default:
+        // some other error occurred
+        break;
+    }
+  });
+localStorage.setItem(
+  'time',
+  player
+    .setCurrentTime(
+      player
+        .getCurrentTime()
+        .then(function (seconds) {
+          // seconds = the current playback position
+        })
+        .catch(function (error) {
+          // an error occurred
+        })
+    )
+    .then(function (seconds) {
+      // seconds = the actual time that the player seeked to
+    })
+    .catch(function (error) {
+      switch (error.name) {
+        case 'RangeError':
+          // the time was less than 0 or greater than the video’s duration
+          break;
+
+        default:
+          // some other error occurred
+          break;
+      }
+    })
+);
+
+localStorage.getItem('time');
