@@ -1,5 +1,6 @@
 import vimeo from '@vimeo/player';
-
+import _ from '/node_modules/lodash.throttle/index.js';
+var throttle = require('lodash.throttle');
 const iframe = document.querySelector('iframe');
 const player = new vimeo(iframe);
 
@@ -14,23 +15,25 @@ player.getVideoTitle().then(function (title) {
 // przypisanie aktualnego czasu do zmiennej
 let currentTime = 0;
 
-player.on('timeupdate', function () {
+const readStorageTime = () => {
   player
     .getCurrentTime()
     .then(function (seconds) {
+      localStorage.setItem('videoplayer-current-time', currentTime);
       currentTime = seconds;
-      localStorage.setItem('current', currentTime);
+      console.log(currentTime);
     })
     .catch(function (error) {
       error = 'some ting go wung';
       return error;
     });
-});
-localStorage.getItem('current', currentTime);
+};
 
-const fromStorageTime = () => {
+const playFromStorageTime = () => {
   player
-    .setCurrentTime(localStorage.getItem('current', currentTime))
+    .setCurrentTime(
+      localStorage.getItem('videoplayer-current-time', currentTime)
+    )
     .then(function (seconds) {})
     .catch(function (error) {
       switch (error.name) {
@@ -41,5 +44,5 @@ const fromStorageTime = () => {
       }
     });
 };
-
-window.addEventListener('load', fromStorageTime);
+window.addEventListener('load', playFromStorageTime);
+player.on('timeupdate', throttle(readStorageTime, 1000));
