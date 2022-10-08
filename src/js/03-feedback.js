@@ -1,4 +1,5 @@
 const { clear } = require('i/lib/inflections');
+const _ = require('lodash');
 
 // html tags
 const input = document.querySelector(`input[type="email"]`);
@@ -26,8 +27,8 @@ const callback2 = () => {
   obj.textarea = textarea.value;
   localStorage.setItem('feedback-form-state', JSON.stringify(obj));
 };
-input.addEventListener('input', callback1);
-textarea.addEventListener('input', callback2);
+input.addEventListener('input', _.debounce(callback1, 500));
+textarea.addEventListener('input', _.debounce(callback2, 500));
 //callbacks and listeners for email and  for message
 
 //submit event
